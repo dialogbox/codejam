@@ -1,11 +1,15 @@
 package org.dbox.code.codejam.r2017;
 
 
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import org.dbox.code.codejam.TestUtils;
 import org.junit.jupiter.api.Test;
@@ -80,6 +84,43 @@ class TestRunner {
         long result = TidyNumbers.solve(k);
 
         w.write(String.format("Case #%d: %d\n", i+1, result));
+      }
+
+      w.close();
+      in.close();
+    }
+  }
+
+  static class BathroomStallsTest {
+    @Test
+    void tidyNumbers() throws IOException {
+      bathroomStallsCase("C-small-practice-1");
+      bathroomStallsCase("C-small-practice-2");
+      bathroomStallsCase("C-large-practice");
+    }
+
+    @Test
+    void bathroomStallsBase() {
+      assertThat(BathroomStalls.solve(4L, 2L), contains(1L, 0L));
+      assertThat(BathroomStalls.solve(5L, 2L), contains(1L, 0L));
+      assertThat(BathroomStalls.solve(6L, 2L), contains(1L, 1L));
+    }
+
+    private void bathroomStallsCase(String caseId) throws IOException {
+      final String problemId = "r2017/BathroomStalls";
+
+      Scanner in = new Scanner(TestUtils.getInput(problemId, caseId));
+      BufferedWriter w = TestUtils.getOutput(problemId, caseId);
+
+      int numOfCase = in.nextInt();
+
+      for (int i = 0; i < numOfCase; i++) {
+        long n = in.nextLong();
+        long k = in.nextLong();
+
+        List<Long> result = BathroomStalls.solve(n, k);
+
+        w.write(String.format("Case #%d: %d %d\n", i+1, result.get(0), result.get(1)));
       }
 
       w.close();
